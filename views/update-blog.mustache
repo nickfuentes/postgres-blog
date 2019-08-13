@@ -3,14 +3,19 @@
 </head>
 
     <body>
+
+    <header>
+    <a href="http://localhost:3000/blogs/register">Register Page</a>
+    <a href="http://localhost:3000/blogs/login">Login Page</a>
+    <a href="http://localhost:3000/blogs">All Blogs</a>
+    <a href="http://localhost:3000/blogs/create-blog">Create Blog</a>
+</header>
     
         <h1 id="createTitlePage">Update Blog</h1>
 
        <form id="updateForm" action="/blogs/update-blog" method="POST"">
             <span>Blog Title:</span>
             <input type="text" name="title" />
-            <span>Author:</span>
-            <input type="text" name="author" />
             <span>Body:</span>
             <textarea name="body"></textarea>
             <button>Update</button>

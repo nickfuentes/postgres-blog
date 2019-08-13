@@ -10,7 +10,7 @@ const db = pgp(connectionString);
 router.get('/', (req, res) => {
     db.any('SELECT blogid, title, author, body, datecreated FROM blogs;')
         .then(blogs => {
-            // console.log(blogs)
+            console.log(blogs)
             res.render('blogs', { blogs: blogs })
         }).catch(error => {
             res.render('blogs', { message: 'Unable to get blogs!' })
@@ -25,6 +25,11 @@ router.get('/register', (req, res) => {
 // GET Shows the register form
 router.get('/register', (req, res) => {
     res.render('register')
+})
+
+// GET shows the login form
+router.get('/login', (req, res) => {
+    res.render('login')
 })
 
 // GET gets the blog create form

@@ -4,12 +4,19 @@
 
     <body>
 
+     <header>
+        <a href="http://localhost:3000/blogs/register">Register Page</a>
+        <a href="http://localhost:3000/blogs/login">Login Page</a>
+        <a href="http://localhost:3000/blogs">All Blogs</a>
+        <a href="http://localhost:3000/blogs/create-blog">Create Blog</a>
+    </header>
+
     <h1>All Blogs Here!</h1>
+
 
         {{#blogs}}
             <form id="blogsForm" action="/blogs/delete-blog" method="POST" >
                 <h2>{{title}}</h2>
-                <span>{{author}}</span>
                 <span>{{datecreated}}</span>
                 <p>{{body}}</p>
                 <button>Delete</button>

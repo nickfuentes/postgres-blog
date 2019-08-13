@@ -15,6 +15,10 @@
                 <button>Delete</button>
                 <input type="hidden" name="blogid" value="{{blogid}}">
              </form>
+             <form id="blogsForm" action="/blogs/update-blog" method="GET" >
+                <button>Update</button>
+                <input type="hidden" name="blogid" value="{{blogid}}">
+             </form>
         {{/blogs}}
 
     </body>

@@ -1,0 +1,31 @@
+<html>
+<head>
+</head>
+
+    <body>
+    
+        <h1 id="createTitlePage">Update Blog</h1>
+
+       <form id="updateForm" action="/blogs/update-blog" method="POST"">
+            <span>Blog Title:</span>
+            <input type="text" name="title" />
+            <span>Author:</span>
+            <input type="text" name="author" />
+            <span>Body:</span>
+            <textarea name="body"></textarea>
+            <button>Update</button>
+            <input type="hidden" name="blogid" value="{{blogid}}">
+       </form>
+
+       {{#blogs}}
+            <form id="blogsForm" action="/blogs/delete-blog" method="POST" >
+                <h2>{{title}}</h2>
+                <span>{{author}}</span>
+                <span>{{datecreated}}</span>
+                <p>{{body}}</p>
+                <input type="hidden" name="blogid" value="{{blogid}}">
+             </form>
+        {{/blogs}}
+
+    </body>
+</html>

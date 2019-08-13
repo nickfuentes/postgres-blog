@@ -5,8 +5,6 @@ const pgp = require('pg-promise')();
 const connectionString = 'postgres://localhost:5432/blogdb';
 const db = pgp(connectionString);
 
-const Blog = require("../models/blog")
-
 // GET shows all the blogs
 router.get('/', (req, res) => {
     db.any('SELECT blogid, title, author, body, datecreated FROM blogs;')
@@ -29,10 +27,8 @@ router.post('/create-blog', (req, res) => {
     let author = req.body.author
     let body = req.body.body
 
-    let blog = new Blog(title, author, body)
-
     db.none('INSERT INTO blogs(title, author, body) VALUES($1, $2, $3)', [title, author, body]).then(() => {
-        res.redirect('/')
+        res.redirect('/blogs')
     })
 })
 

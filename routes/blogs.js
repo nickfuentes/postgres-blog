@@ -8,23 +8,38 @@ const db = pgp(connectionString);
 
 // GET gets all the blogs
 router.get('/', (req, res) => {
-    db.any('SELECT blogid, title, author, body, datecreated FROM blogs;')
+    db.any('SELECT blogid, title, body, datecreated FROM blogs;')
         .then(blogs => {
             console.log(blogs)
             res.render('blogs', { blogs: blogs })
         }).catch(error => {
+            console.log(error)
             res.render('blogs', { message: 'Unable to get blogs!' })
         })
 })
 
-// GET shows the register form
+// POST the register information to database
 router.get('/register', (req, res) => {
     res.render('register')
 })
 
-// GET Shows the register form
-router.get('/register', (req, res) => {
-    res.render('register')
+// POST the user username and password to users database
+router.post('/register', (req, res) => {
+
+    let username = req.body.username
+    let password = req.body.password
+
+    db.oneOrNone('SELECT userid FROM users WHERE username = $1', [username])
+        .then((user) => {
+            if (user) {
+                res.render('register', { message: "User name already exists!" })
+            } else {
+                db.none('INSERT INTO users(username, password) VALUES($1, $2)', [username, password])
+                    .then(() => {
+                        res.send('SUCCESS')
+                    })
+            }
+        })
 })
 
 // GET shows the login form
@@ -40,10 +55,9 @@ router.get("/create-blog", (req, res) => {
 // POST the blog to the database
 router.post('/create-blog', (req, res) => {
     let title = req.body.title
-    let author = req.body.author
     let body = req.body.body
 
-    db.none('INSERT INTO blogs(title, author, body) VALUES($1, $2, $3)', [title, author, body]).then(() => {
+    db.none('INSERT INTO blogs(title, body) VALUES($1, $2)', [title, body]).then(() => {
         res.redirect('/blogs')
     })
 })

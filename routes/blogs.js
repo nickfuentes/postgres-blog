@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
+
 const pgp = require('pg-promise')();
 const connectionString = 'postgres://localhost:5432/blogdb';
 const db = pgp(connectionString);
@@ -14,6 +15,16 @@ router.get('/', (req, res) => {
         }).catch(error => {
             res.render('blogs', { message: 'Unable to get blogs!' })
         })
+})
+
+// GET shows the register form
+router.get('/register', (req, res) => {
+    res.render('register')
+})
+
+// GET Shows the register form
+router.get('/register', (req, res) => {
+    res.render('register')
 })
 
 // GET gets the blog create form

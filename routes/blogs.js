@@ -34,7 +34,7 @@ router.post('/register', (req, res) => {
             if (user) {
                 res.render('register', { message: "User name already exists!" })
             } else {
-                db.none('INSERT INTO users(username, password) VALUES($1, $2)', [username, password])
+                db.none('INSERT INTO users(username, password) VALUES($1, $2)', res[username, password])
                     .then(() => {
                         res.send('SUCCESS')
                     })

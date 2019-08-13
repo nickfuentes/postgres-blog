@@ -7,12 +7,14 @@
     <h1>All Blogs Here!</h1>
 
         {{#blogs}}
-           
-            <h2>{{title}}</h2>
-            <span>{{author}}</span>
-            <span>{{datecreated}}</span>
-            <p>{{body}}</p>
-        
+            <form id="blogsForm" action="/blogs/delete-blog" method="POST" >
+                <h2>{{title}}</h2>
+                <span>{{author}}</span>
+                <span>{{datecreated}}</span>
+                <p>{{body}}</p>
+                <button>Delete</button>
+                <input type="hidden" name="blogid" value="{{blogid}}">
+             </form>
         {{/blogs}}
 
     </body>

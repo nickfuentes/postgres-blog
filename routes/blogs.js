@@ -32,5 +32,13 @@ router.post('/create-blog', (req, res) => {
     })
 })
 
+// POST deletes the blog
+router.post("/delete-blog", (req, res) => {
+    let blogid = req.body.blogid
+    console.log(blogid)
+    db.none('DELETE FROM blogs WHERE blogid = $1', [blogid]).then(() => {
+        res.redirect('/blogs')
+    })
+})
 
 module.exports = router

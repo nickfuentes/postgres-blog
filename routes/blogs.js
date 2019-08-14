@@ -32,6 +32,19 @@ router.get('/register', (req, res) => {
   res.render('register')
 })
 
+// GET gets all the blogs
+router.get('/my-blogs', (req, res) => {
+
+  let userid = req.session.user.userid
+
+  db.any('SELECT blogid, title, body FROM blogs WHERE userid = $1', [userid])
+    .then((blogs) => {
+      console.log(blogs)
+      res.render('my-blogs', { blogs: blogs })
+    })
+})
+
+
 // POST the user username and password to users database with bcrypt
 router.post('/register', (req, res) => {
 
@@ -46,7 +59,7 @@ router.post('/register', (req, res) => {
         bcrypt.hash(password, SALT_ROUNDS).then(function (hash) {
           db.none('INSERT INTO users(username, password) VALUES($1, $2)', [username, hash])
             .then(() => {
-              res.send('SUCCESS')
+              res.redirect('/blogs/login')
             })
         })
       }
@@ -95,8 +108,9 @@ router.get("/create-blog", (req, res) => {
 router.post('/create-blog', (req, res) => {
   let title = req.body.title
   let body = req.body.body
+  let userid = req.session.user.userid
 
-  db.none('INSERT INTO blogs(title, body) VALUES($1, $2)', [title, body]).then(() => {
+  db.none('INSERT INTO blogs(title, body, userid) VALUES($1, $2, $3)', [title, body, userid]).then(() => {
     res.redirect('/blogs')
   })
 })

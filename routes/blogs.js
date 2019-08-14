@@ -25,7 +25,7 @@ router.get('/register', (req, res) => {
   res.render('register')
 })
 
-// POST the user username and password to users database
+// POST the user username and password to users database with bcrypt
 router.post('/register', (req, res) => {
 
   let username = req.body.username
@@ -49,6 +49,31 @@ router.post('/register', (req, res) => {
 // GET shows the login form
 router.get('/login', (req, res) => {
   res.render('login')
+})
+
+// POST logins user to app
+router.post('/login', (req, res) => {
+
+  let username = req.body.username
+  let password = req.body.password
+
+  db.oneOrNone('SELECT userid, username, password FROM users WHERE username = $1', [username])
+    .then((user) => {
+      if (user) {
+        bcrypt.compare(password, user.password).then(function (result) {
+          if (result) {
+            // if password matches 
+            // put the userid or username in session 
+            // req.session.user = { userId: user.userid, username: user.username }
+            res.send('Take user to dashboard page.')
+          } else {
+            res.send('render the same page and tell the user that credentials are wrong')
+          }
+        })
+      } else {
+        res.render('login', { message: "Invalid username or password!" })
+      }
+    })
 })
 
 // GET gets the blog create form

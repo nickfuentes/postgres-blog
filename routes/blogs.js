@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt')
 const SALT_ROUNDS = 10
 const session = require('express-session')
 
-
 const pgp = require('pg-promise')();
 const connectionString = 'postgres://localhost:5432/blogdb';
 const db = pgp(connectionString);

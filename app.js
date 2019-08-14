@@ -1,5 +1,6 @@
 const express = require("express")
 const app = express()
+const path = require('path')
 
 const mustacheExpress = require("mustache-express")
 
@@ -7,8 +8,11 @@ const blogsRouter = require('./routes/blogs')
 
 app.use(express.urlencoded({ extended: false }))
 
-app.engine("mustache", mustacheExpress())
-app.set("views", "./views")
+const VIEWS_PATH = path.join(__dirname, '/views')
+
+
+app.engine("mustache", mustacheExpress(VIEWS_PATH + '/partials', '.mustache'))
+app.set("views", VIEWS_PATH)
 app.set("view engine", "mustache")
 
 app.use("/blogs", blogsRouter)

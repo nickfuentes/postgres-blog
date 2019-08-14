@@ -2,20 +2,28 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const SALT_ROUNDS = 10
+const session = require('express-session')
 
 
 const pgp = require('pg-promise')();
 const connectionString = 'postgres://localhost:5432/blogdb';
 const db = pgp(connectionString);
 
+router.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+}))
+
 // GET gets all the blogs
 router.get('/', (req, res) => {
   db.any('SELECT blogid, title, body, datecreated FROM blogs;')
     .then(blogs => {
-      console.log(blogs)
-      res.render('blogs', { blogs: blogs })
+      res.render('blogs', {
+        blogs: blogs,
+        username: req.session.user.username
+      })
     }).catch(error => {
-      console.log(error)
       res.render('blogs', { message: 'Unable to get blogs!' })
     })
 })
@@ -62,10 +70,13 @@ router.post('/login', (req, res) => {
       if (user) {
         bcrypt.compare(password, user.password).then(function (result) {
           if (result) {
-            // if password matches 
-            // put the userid or username in session 
-            // req.session.user = { userId: user.userid, username: user.username }
-            res.send('Take user to dashboard page.')
+            if (req.session) {
+              req.session.user = {
+                userid: user.userid,
+                username: user.username
+              }
+            }
+            res.redirect('/blogs')
           } else {
             res.send('render the same page and tell the user that credentials are wrong')
           }

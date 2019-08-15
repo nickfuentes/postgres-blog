@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: false }))
 
 const VIEWS_PATH = path.join(__dirname, '/views')
 
+app.use("/css", express.static(__dirname + '/css'))
 
 app.engine("mustache", mustacheExpress(VIEWS_PATH + '/partials', '.mustache'))
 app.set("views", VIEWS_PATH)

@@ -3,6 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcrypt')
 const SALT_ROUNDS = 10
 const session = require('express-session')
+const checkAuth = require("../utils/checkAuth")
 
 const pgp = require('pg-promise')();
 const connectionString = 'postgres://localhost:5432/blogdb';
@@ -87,7 +88,7 @@ router.post('/login', (req, res) => {
 })
 
 // GET gets all the blogs
-router.get('/my-blogs', (req, res) => {
+router.get('/my-blogs', checkAuth, (req, res) => {
 
   let userid = req.session.user.userid
 
@@ -98,7 +99,7 @@ router.get('/my-blogs', (req, res) => {
 })
 
 // GET gets the blog create form
-router.get("/create-blog", (req, res) => {
+router.get("/create-blog", checkAuth, (req, res) => {
   res.render("create-blog")
 })
 

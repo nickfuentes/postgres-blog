@@ -32,19 +32,6 @@ router.get('/register', (req, res) => {
   res.render('register')
 })
 
-// GET gets all the blogs
-router.get('/my-blogs', (req, res) => {
-
-  // let userid = req.session.user.userid
-
-  let userid = 16
-
-  db.any('SELECT blogid, title, body FROM blogs WHERE userid = $1', [userid])
-    .then((blogs) => {
-      res.render('my-blogs', { blogs: blogs })
-    })
-})
-
 // POST the user username and password to users database with bcrypt
 router.post('/register', (req, res) => {
 
@@ -96,6 +83,17 @@ router.post('/login', (req, res) => {
       } else {
         res.render('login', { message: "Invalid username or password!" })
       }
+    })
+})
+
+// GET gets all the blogs
+router.get('/my-blogs', (req, res) => {
+
+  let userid = req.session.user.userid
+
+  db.any('SELECT blogid, title, body FROM blogs WHERE userid = $1', [userid])
+    .then((blogs) => {
+      res.render('my-blogs', { blogs: blogs })
     })
 })
 

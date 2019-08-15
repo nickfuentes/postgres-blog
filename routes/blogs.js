@@ -121,7 +121,7 @@ router.post("/delete-blog", (req, res) => {
 
   db.none('DELETE FROM blogs WHERE blogid = $1', [blogid])
     .then(() => {
-      res.redirect('/blogs')
+      res.redirect('/blogs/my-blogs')
     })
 })
 

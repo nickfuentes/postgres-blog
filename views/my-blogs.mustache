@@ -17,7 +17,7 @@
 
         {{#blogs}}
 
-            <a href="#" class="list-group-item list-group-item-action">
+           
                 <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{{title}}</h5>
                 </div>
@@ -27,7 +27,11 @@
                   <button type="button" class="btn btn-primary">Update</button>
                 </a>
 
-            </a>
+                <form action="/blogs/delete-blog" method="POST">
+                <input type="hidden" name="blogid" value="{{blogid}}" />
+                <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+
 
         {{/blogs}}
 

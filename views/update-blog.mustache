@@ -1,36 +1,38 @@
-<html>
-<head>
-</head>
+<!doctype html>
+<html lang="en">
+  <head>
+   
+   {{> header}}
 
-    <body>
+  </head>
+  <body>
+  
+<div class="container">
 
-    <header>
-    <a href="http://localhost:3000/blogs/register">Register Page</a>
-    <a href="http://localhost:3000/blogs/login">Login Page</a>
-    <a href="http://localhost:3000/blogs">All Blogs</a>
-    <a href="http://localhost:3000/blogs/create-blog">Create Blog</a>
-</header>
-    
+    {{> menu}}
+
         <h1 id="createTitlePage">Update Blog</h1>
 
-       <form id="updateForm" action="/blogs/update-blog" method="POST"">
-            <span>Blog Title:</span>
-            <input type="text" name="title" />
-            <span>Body:</span>
-            <textarea name="body"></textarea>
-            <button>Update</button>
-            <input type="hidden" name="blogid" value="{{blogid}}">
-       </form>
 
-       {{#blogs}}
-            <form id="blogsForm" action="/blogs/delete-blog" method="POST" >
-                <h2>{{title}}</h2>
-                <span>{{author}}</span>
-                <span>{{datecreated}}</span>
-                <p>{{body}}</p>
-                <input type="hidden" name="blogid" value="{{blogid}}">
-             </form>
-        {{/blogs}}
+    <form action="/blogs/update-blog" method="POST">
 
-    </body>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Blog Title</label>
+            <input type="text" name="title" value="{{title}}" class="form-control" placeholder="Enter Blog Title">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">Main Body</label>
+            <textarea type="text" name="body" class="form-control" placeholder="Type Blog">{{body}}</textarea>
+        </div>
+        <input type="hidden" name="blogid" value="{{blogid}}" />
+        <button type="submit" class="btn btn-primary">Create</button>
+        
+    </form>
+   
+</div>
+
+   {{> footer}}
+
+  </body>
 </html>

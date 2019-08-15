@@ -35,15 +35,15 @@ router.get('/register', (req, res) => {
 // GET gets all the blogs
 router.get('/my-blogs', (req, res) => {
 
-  let userid = req.session.user.userid
+  // let userid = req.session.user.userid
+
+  let userid = 16
 
   db.any('SELECT blogid, title, body FROM blogs WHERE userid = $1', [userid])
     .then((blogs) => {
-      console.log(blogs)
       res.render('my-blogs', { blogs: blogs })
     })
 })
-
 
 // POST the user username and password to users database with bcrypt
 router.post('/register', (req, res) => {
@@ -125,28 +125,34 @@ router.post("/delete-blog", (req, res) => {
     })
 })
 
-// // GET gets the update blog form
-// router.get("/update-blog", (req, res) => {
-//     let blogid = req.body.blogid
-//     console.log(blogid)
-//     db.any('SELECT blogid, title, author, body, datecreated FROM blogs WHERE blogid = $1', [blogid])
-//         .then(blogs => {
-//             console.log(blogs)
-//             res.render('update-blog', { blogs: blogs })
-//         })
+// GET the params blogid of the article
+router.get("/update-blog/:blogid", (req, res) => {
 
-//     res.render('update-blog')
-// })
+  let blogid = req.params.blogid
 
-// router.post("/update-blog", (req, res) => {
-//     let blogid = req.body.blogid
-//     let title = req.body.title
-//     let author = req.body.author
-//     let body = req.body.body
+  db.one('SELECT blogid, title, body FROM blogs WHERE blogid = $1', [blogid])
+    .then((blog) => {
+      res.render('update-blog', blog)
+    })
 
-//     db.none('UPDATE blogs SET title = $1, author = $2, body = $3, WHERE blogid = $1', [title, author, body, blogid]).then(() => {
-//         res.redirect('/blogs')
-//     })
-// })
+})
+
+// GET shows the update blog form
+router.get('/update-blog', (req, res) => {
+  res.render('update-blog')
+})
+
+// POST updates the user blog by blogid
+router.post('/update-blog', (req, res) => {
+
+  let title = req.body.title
+  let body = req.body.body
+  let blogid = req.body.blogid
+
+  db.none('UPDATE blogs SET title = $1, body = $2 WHERE blogid = $3', [title, body, blogid])
+    .then(() => {
+      res.redirect('/blogs/my-blogs')
+    })
+})
 
 module.exports = router

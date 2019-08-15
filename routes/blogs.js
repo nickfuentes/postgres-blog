@@ -75,7 +75,7 @@ router.post('/login', (req, res) => {
                 username: user.username
               }
             }
-            res.redirect('/blogs')
+            res.redirect('/blogs/my-blogs')
           } else {
             res.send('render the same page and tell the user that credentials are wrong')
           }
@@ -133,11 +133,6 @@ router.get("/update-blog/:blogid", (req, res) => {
       res.render('update-blog', blog)
     })
 
-})
-
-// GET shows the update blog form
-router.get('/update-blog', (req, res) => {
-  res.render('update-blog')
 })
 
 // POST updates the user blog by blogid

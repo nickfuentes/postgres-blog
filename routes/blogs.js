@@ -15,6 +15,12 @@ router.use(session({
   saveUninitialized: false
 }))
 
+// Authinticated local to hide links if user is not logged in
+router.use((req, res, next) => {
+  res.locals.authenticated = req.session.user == null ? false : true
+  next()
+})
+
 // GET gets all the blogs
 router.get('/', (req, res) => {
   db.any('SELECT blogid, title, body, datecreated FROM blogs;')
@@ -138,6 +144,19 @@ router.get("/update-blog/:blogid", (req, res) => {
 
 // POST updates the user blog by blogid
 router.post('/update-blog', (req, res) => {
+
+  let title = req.body.title
+  let body = req.body.body
+  let blogid = req.body.blogid
+
+  db.none('UPDATE blogs SET title = $1, body = $2 WHERE blogid = $3', [title, body, blogid])
+    .then(() => {
+      res.redirect('/blogs/my-blogs')
+    })
+})
+
+// POST updates the user blog by blogid
+router.post('/logout', (req, res) => {
 
   let title = req.body.title
   let body = req.body.body

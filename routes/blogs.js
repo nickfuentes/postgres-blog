@@ -156,16 +156,17 @@ router.post('/update-blog', (req, res) => {
 })
 
 // POST updates the user blog by blogid
-router.post('/logout', (req, res) => {
+router.get('/logout', (req, res, next) => {
 
-  let title = req.body.title
-  let body = req.body.body
-  let blogid = req.body.blogid
-
-  db.none('UPDATE blogs SET title = $1, body = $2 WHERE blogid = $3', [title, body, blogid])
-    .then(() => {
-      res.redirect('/blogs/my-blogs')
+  if (req.session) {
+    req.session.destroy((error) => {
+      if (error) {
+        next(error)
+      } else {
+        res.redirect('/blogs/login')
+      }
     })
+  }
 })
 
 module.exports = router

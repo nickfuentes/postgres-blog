@@ -25,12 +25,9 @@ router.use((req, res, next) => {
 router.get('/', (req, res) => {
   db.any('SELECT blogid, title, body, datecreated FROM blogs;')
     .then(blogs => {
-      res.render('blogs', {
-        blogs: blogs,
-        username: req.session.user.username
-      })
+      res.render('blogs', { blogs: blogs })
     }).catch(error => {
-      res.render('blogs', { message: 'Unable to get blogs!' })
+      res.render('blogs', { message: 'This is broken' })
     })
 })
 

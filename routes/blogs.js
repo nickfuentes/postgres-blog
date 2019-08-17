@@ -50,7 +50,7 @@ router.post('/register', (req, res) => {
         bcrypt.hash(password, SALT_ROUNDS).then(function (hash) {
           db.none('INSERT INTO users(username, password) VALUES($1, $2)', [username, hash])
             .then(() => {
-              res.redirect('/blogs/login')
+              res.redirect('/login')
             })
         })
       }

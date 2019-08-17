@@ -6,7 +6,7 @@ const session = require('express-session')
 const checkAuth = require("../utils/checkAuth")
 
 const pgp = require('pg-promise')();
-const connectionString = 'postgres://localhost:5432/blogdb';
+const connectionString = 'postgres://dljgyjfqozrnyn:23845841772d0bc11f7b545e70b84d35567019c97ad2d8a75e5f08db3948c27f@ec2-54-197-239-115.compute-1.amazonaws.com:5432/d3hj9jd6cp50v9'
 const db = pgp(connectionString);
 
 router.use(session({

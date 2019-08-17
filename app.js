@@ -17,7 +17,7 @@ app.engine("mustache", mustacheExpress(VIEWS_PATH + '/partials', '.mustache'))
 app.set("views", VIEWS_PATH)
 app.set("view engine", "mustache")
 
-app.use("/blogs", blogsRouter)
+app.use('/blogs', blogsRouter)
 
 app.listen(PORT, () => {
     console.log("Hey Nick the server is running...")

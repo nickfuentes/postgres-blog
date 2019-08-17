@@ -22,7 +22,7 @@ router.use((req, res, next) => {
 })
 
 // GET gets all the blogs
-router.get('/blogs', (req, res) => {
+router.get('/', (req, res) => {
   db.any('SELECT blogid, title, body, datecreated FROM blogs;')
     .then(blogs => {
       res.render('blogs', { blogs: blogs })

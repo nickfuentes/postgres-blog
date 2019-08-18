@@ -24,11 +24,11 @@
                 <p class="mb-1">{{body}}</p>
 
 <div class="form-check-inline">
-                <a href="/blogs/update-blog/{{blogid}}">
+                <a href="/update-blog/{{blogid}}">
                   <button type="button" class="btn btn-primary">Update</button>
                 </a>
 
-                <form action="/blogs/delete-blog" method="POST">
+                <form action="/delete-blog" method="POST">
                 <input type="hidden" name="blogid" value="{{blogid}}" />
                 <button type="submit" class="btn btn-danger">Delete</button>
                 </form>

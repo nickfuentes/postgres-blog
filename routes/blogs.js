@@ -79,7 +79,7 @@ router.post('/login', (req, res) => {
                 username: user.username
               }
             }
-            res.redirect('/blogs/my-blogs')
+            res.redirect('/my-blogs')
           } else {
             res.send('render the same page and tell the user that credentials are wrong')
           }
@@ -113,7 +113,7 @@ router.post('/create-blog', (req, res) => {
   let userid = req.session.user.userid
 
   db.none('INSERT INTO blogs(title, body, userid) VALUES($1, $2, $3)', [title, body, userid]).then(() => {
-    res.redirect('/blogs')
+    res.redirect('/')
   })
 })
 
@@ -123,7 +123,7 @@ router.post("/delete-blog", (req, res) => {
 
   db.none('DELETE FROM blogs WHERE blogid = $1', [blogid])
     .then(() => {
-      res.redirect('/blogs/my-blogs')
+      res.redirect('/my-blogs')
     })
 })
 
@@ -148,7 +148,7 @@ router.post('/update-blog', (req, res) => {
 
   db.none('UPDATE blogs SET title = $1, body = $2 WHERE blogid = $3', [title, body, blogid])
     .then(() => {
-      res.redirect('/blogs/my-blogs')
+      res.redirect('/my-blogs')
     })
 })
 
@@ -160,7 +160,7 @@ router.get('/logout', (req, res, next) => {
       if (error) {
         next(error)
       } else {
-        res.redirect('/blogs/login')
+        res.redirect('/login')
       }
     })
   }

@@ -113,7 +113,7 @@ router.post('/create-blog', (req, res) => {
   let userid = req.session.user.userid
 
   db.none('INSERT INTO blogs(title, body, userid) VALUES($1, $2, $3)', [title, body, userid]).then(() => {
-    res.redirect('/')
+    res.redirect('/my-blogs')
   })
 })
 
